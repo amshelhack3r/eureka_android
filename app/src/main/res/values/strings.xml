@@ -27,6 +27,14 @@
     <string name="readings">RECORD READINGS</string>
     <string name="compose">COMPOSE</string>
     <string name="retrieve">RETRIEVE FROM SERVER</string>
+    <string name="save">save</string>
+    <string name="clear">clear</string>
+    <string name="prev_reading">Prev-Reading</string>
+    <string name="prev_date">Prev-Date</string>
+    <string name="client_code">client code</string>
+    <string name="date">date</string>
+    <string name="reading">reading</string>
+
     <string name="sms_page">
         Hello user. Select compose if you want to write your own custom message.
         You need to provide the message subject and the message itself. Retrieve from server provides

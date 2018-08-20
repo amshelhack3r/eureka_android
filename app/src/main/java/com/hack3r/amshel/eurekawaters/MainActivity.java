@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void recordReadings(View view){
 
-        String message = "Hold up lad, Next time it will be ready";
-        mutall.showToast(message, "warning");
+//        String message = "Hold up lad, Next time it will be ready";
+//        mutall.showToast(message, "warning");
+        Intent intent =new Intent(this, ReadingPage.class);
+        startActivity(intent);
     }
 
     public void viewInvoices(View view){
