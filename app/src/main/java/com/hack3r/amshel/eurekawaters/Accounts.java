@@ -3,12 +3,15 @@ package com.hack3r.amshel.eurekawaters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Accounts extends Activity {
+public class Accounts extends Activity implements MyItemTouchHelper.itemTouchListener {
 
     private ArrayList numbers;
     private ArrayList<Sms> smsArrayList;
@@ -38,6 +41,8 @@ public class Accounts extends Activity {
     public static final String TAG = Accounts.class.getSimpleName();
     SwipeRefreshLayout refreshLayout;
     HashMap<String, String> params;
+    CustomSmsAdapter customSmsAdapter;
+    ItemTouchHelper.SimpleCallback simpleCallback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public class Accounts extends Activity {
         });
     }
 
-    public void promptSend(View view){
+    public void promptSend(View view) {
         int no_accounts = numbers.size();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(Accounts.this);
         mBuilder.setTitle(R.string.edit_title)
@@ -82,15 +87,15 @@ public class Accounts extends Activity {
         mDialog.show();
     }
 
-    public void getJsonFromServer(String url){
+    public void getJsonFromServer(String url) {
         mutall.showProgress("Fetching from server");
 
         //Make a new Json ArrayRequest from server
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i = 0; i<response.length(); i++ ){
-                    try{
+                for (int i = 0; i < response.length(); i++) {
+                    try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String number = jsonObject.getString("number");
                         String message = jsonObject.getString("message");
@@ -101,8 +106,13 @@ public class Accounts extends Activity {
                         sms.setSmsBody(message);
                         smsArrayList.add(sms);
 
-                    }catch (JSONException e){
-                        mutall.showToast(e.getMessage(), "error");
+                    } catch (final JSONException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mutall.showToast(e.getMessage(), "error");
+                            }
+                        });
                     }
                 }
 
@@ -110,9 +120,12 @@ public class Accounts extends Activity {
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
                 recyclerView.setNestedScrollingEnabled(false);
-                CustomSmsAdapter customSmsAdapter = new CustomSmsAdapter(smsArrayList);
+                customSmsAdapter = new CustomSmsAdapter(smsArrayList);
                 recyclerView.setAdapter(customSmsAdapter);
                 mutall.dismissProgress();
+
+                simpleCallback = new MyItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, Accounts.this);
+                new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -127,11 +140,11 @@ public class Accounts extends Activity {
         refreshLayout.setRefreshing(false);
     }
 
-    public void postToServer(){
+    public void postToServer() {
         //Get a list of all numbers gotten from the last activity
         ArrayList sentNumbers = mutall.getAllSentNumbers();
 
-        final JSONArray jsonArray= new JSONArray();
+        final JSONArray jsonArray = new JSONArray();
 
 
         String url = "http://mutall.co.ke/mutall_eureka_waters/insert/index.php";
@@ -146,7 +159,7 @@ public class Accounts extends Activity {
             public void onErrorResponse(VolleyError error) {
                 mutall.showSnack(error.getMessage());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
                 params.put("json", jsonArray.toString());
@@ -154,5 +167,44 @@ public class Accounts extends Activity {
             }
         };
         VolleyController.getInstance().addRequestQueue(anything);
+    }
+
+    @Override
+    public void onSwipped(RecyclerView.ViewHolder viewHolder, int Directions, int postion) {
+        if (viewHolder instanceof CustomSmsAdapter.MyViewHolder) {
+            if (Directions == ItemTouchHelper.LEFT) {
+                // get the removed item name to display it in snack bar
+                String name = smsArrayList.get(viewHolder.getAdapterPosition()).getSmsNumber();
+
+                // backup of removed item for undo purpose
+                final Sms deletedItem = smsArrayList.get(viewHolder.getAdapterPosition());
+                final int deletedIndex = viewHolder.getAdapterPosition();
+
+                // remove the item from recycler view
+                customSmsAdapter.removeItem(viewHolder.getAdapterPosition());
+
+                View view = this.findViewById(R.id.accounts_view);
+                // showing snack bar with Undo option
+                final Snackbar snackbar = Snackbar
+                        .make(view, name + " removed from list!", Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction("UNDO DELETED ITEM", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        // undo is selected, restore the deleted item
+                        customSmsAdapter.restoreItem(deletedItem, deletedIndex);
+                        snackbar.dismiss();
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+            } else {
+                String number = smsArrayList.get(viewHolder.getAdapterPosition()).getSmsNumber();
+                String message = smsArrayList.get(viewHolder.getAdapterPosition()).getSmsBody();
+                //send the sms
+//                mutall.send_sms(number, message);
+                mutall.showToast(number+ "\n"+ message, "success" );
+            }
+        }
     }
 }

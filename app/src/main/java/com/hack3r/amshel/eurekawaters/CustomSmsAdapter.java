@@ -1,12 +1,11 @@
 package com.hack3r.amshel.eurekawaters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,13 +22,16 @@ public class CustomSmsAdapter extends RecyclerView.Adapter<CustomSmsAdapter.MyVi
 
         TextView sms, mobile;
         ImageView image;
+        RelativeLayout foreground_view, background_view;
 
         public MyViewHolder(View view){
             super(view);
 
 //            image = view.findViewById(R.id.client_image);
-            sms = view.findViewById(R.id.sms);
-            mobile = view.findViewById(R.id.mobile);
+            sms = view.findViewById(R.id.message_desc);
+            mobile = view.findViewById(R.id.mobile_num);
+            foreground_view = view.findViewById(R.id.view_foreground);
+            background_view = view.findViewById(R.id.view_background);
         }
     }
 
@@ -52,4 +54,21 @@ public class CustomSmsAdapter extends RecyclerView.Adapter<CustomSmsAdapter.MyVi
     public int getItemCount() {
         return smsList.size();
     }
+
+    //This is a method for removing anitem from arraylist
+    public void removeItem(int position){
+        smsList.remove(position);
+
+        notifyItemRemoved(position);
+    }
+
+    //This is a method for restoring a deleted item to an arraylist
+    public void restoreItem(Sms sms, int postion){
+        smsList.add(postion, sms);
+
+        notifyItemInserted(postion);
+
+    }
+
+
 }
