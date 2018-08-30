@@ -208,7 +208,7 @@
                 android:layout_marginRight="63dp"
                 android:layout_marginStart="65dp"
                 android:ems="10"
-                android:hint="reading"
+                android:hint="readingObject"
                 android:inputType="number"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
