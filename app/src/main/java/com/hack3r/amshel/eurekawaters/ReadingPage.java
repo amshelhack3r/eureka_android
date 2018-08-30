@@ -3,13 +3,9 @@ package com.hack3r.amshel.eurekawaters;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import es.dmoral.toasty.Toasty;
 
 public class ReadingPage extends Activity {
     EditText code, date, value;
@@ -42,9 +38,9 @@ public class ReadingPage extends Activity {
 
                 }else {
 
-                    Reading reading = new Reading(1, client_code, reading_date, reading_value);
+                    ReadingObject readingObject = new ReadingObject(1, client_code, reading_date, reading_value);
 
-                    databaseHandler.insertReading(reading);
+                    databaseHandler.insertReading(readingObject);
                     mutall.showToast("inserted","success");
                 }
             }
