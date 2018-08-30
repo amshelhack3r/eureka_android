@@ -184,7 +184,7 @@
                 android:layout_marginBottom="70dp"
                 android:layout_marginEnd="35dp"
                 android:layout_marginRight="35dp"
-                android:text="@string/readings"
+                android:text="@string/readingObjects"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
