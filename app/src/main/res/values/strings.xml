@@ -31,9 +31,11 @@
     <string name="clear">clear</string>
     <string name="prev_reading">Prev-Reading</string>
     <string name="prev_date">Prev-Date</string>
-    <string name="client_code">client code</string>
+    <string name="client_code">code</string>
+    <string name="client_name">name</string>
     <string name="date">date</string>
     <string name="reading">reading</string>
+    <string name="value">value</string>
 
     <string name="sms_page">
         Hello user. Select compose if you want to write your own custom message.
