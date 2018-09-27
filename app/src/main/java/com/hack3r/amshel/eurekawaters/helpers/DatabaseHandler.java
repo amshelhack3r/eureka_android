@@ -7,14 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import com.hack3r.amshel.eurekawaters.objects.Client;
+
 import com.hack3r.amshel.eurekawaters.query.SqlQuery;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -127,8 +126,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //        return readings;
 //     }
 //  get all clients
-    public List<Client> getAllClients() {
-        List<Client> clients = new ArrayList<>();
+    public List<Reading> getAllClients() {
+        List<Reading> clients = new ArrayList<>();
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -137,7 +136,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Client client = new Client(
+                Reading client = new Reading(
                         cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_CODE)),
                         cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_NAME))
                 );
@@ -168,7 +167,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return rowCount;
     }
 
-    public int updateMeter(Client client){
+    public int updateMeter(Reading client){
         //get writeable database as we want to write to the database
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -181,7 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return id;
     }
 
-    public void populateClientTable(Client client){
+    public void populateClientTable(Reading client){
         //get writeable database as we want to write to the database
         SQLiteDatabase database = this.getWritableDatabase();
 
