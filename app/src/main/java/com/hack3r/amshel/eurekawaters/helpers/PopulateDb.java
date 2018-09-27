@@ -6,7 +6,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.hack3r.amshel.eurekawaters.library.VolleyController;
-import com.hack3r.amshel.eurekawaters.objects.Client;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
 
 import org.json.JSONArray;
@@ -42,7 +41,7 @@ public class PopulateDb implements Runnable  {
                         String client_meter = jsonObject.getString("meter_serial_no");
                         String client_number = jsonObject.getString("number");
 
-                        Client client = new Client(client_code, client_name);
+                        Reading client = new Reading(client_code, client_name);
                         if(client_meter != null){
                             client.setMeter(client_meter);
                         }
@@ -78,7 +77,7 @@ public class PopulateDb implements Runnable  {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String client_code = jsonObject.getString("code");
                         String date = jsonObject.getString("date");
-                        String value = jsonObject.getString("value");
+                        int value = jsonObject.getInt("value");
 
                         Reading reading = new Reading(client_code, date, value);
 
