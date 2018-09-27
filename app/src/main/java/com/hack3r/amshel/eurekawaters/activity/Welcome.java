@@ -1,4 +1,4 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hack3r.amshel.eurekawaters.MainActivity;
+import com.hack3r.amshel.eurekawaters.helpers.PopulateDb;
+import com.hack3r.amshel.eurekawaters.helpers.PrefManager;
+import com.hack3r.amshel.eurekawaters.R;
+
 public class Welcome extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -36,6 +41,7 @@ public class Welcome extends AppCompatActivity {
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
         }
+
 
         /** Making notification bar transparent.
          * Not really necessary but an added ui feature if i must say

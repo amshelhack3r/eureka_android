@@ -1,4 +1,4 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.helpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.hack3r.amshel.eurekawaters.R;
+import com.hack3r.amshel.eurekawaters.objects.Sms;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class CustomSmsAdapter extends RecyclerView.Adapter<CustomSmsAdapter.MyVi
 
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView sms, mobile;
         ImageView image;

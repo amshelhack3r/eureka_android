@@ -1,11 +1,14 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-public class SmsPage extends Activity {
+import com.hack3r.amshel.eurekawaters.R;
+import com.hack3r.amshel.eurekawaters.library.Mutall;
+
+public class SmsActivity extends Activity {
     Mutall mutall;
 
     @Override

@@ -1,4 +1,4 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

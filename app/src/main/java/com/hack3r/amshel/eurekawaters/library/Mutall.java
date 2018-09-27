@@ -60,43 +60,27 @@
  * @version 1.0.0
  * @since 27-July-2018
  */
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.library;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.hack3r.amshel.eurekawaters.objects.Sms;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -121,11 +105,6 @@ public class Mutall {
         this.activity = activity;
     }
 
-    /**
-     * we can also instatiate a mutall object by giving it a context
-     */
-    public Mutall(){
-    }
     /**
      * Create a method for sending sms to a particular number
      * Return true if thesms is sent and false otherwise

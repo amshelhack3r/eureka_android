@@ -1,9 +1,11 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.helpers;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import com.hack3r.amshel.eurekawaters.helpers.CustomSmsAdapter;
 
 public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback{
     public itemTouchListener listener;

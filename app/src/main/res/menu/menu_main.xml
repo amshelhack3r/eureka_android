@@ -2,9 +2,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hack3r.amshel.eurekawaters.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/client_count"
+        android:title="show client count"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/reading_count"
+        android:title="show reading count"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/wipe"
+        android:title="wipe db"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/populateClients"
+        android:title="populate clients"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/populateReadings"
+        android:title="populate readings"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/settings"
+        android:title="upload edge cases"
+        app:showAsAction="never"/>
+
+
 </menu>

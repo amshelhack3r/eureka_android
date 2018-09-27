@@ -1,4 +1,4 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.library;
 
 import android.app.Application;
 
@@ -22,7 +22,7 @@ public class VolleyController extends Application {
     public static final String TAG = VolleyController.class.getSimpleName();
     private RequestQueue requestQueue;
 
-    static VolleyController getInstance() {
+   public static VolleyController getInstance() {
         return ourInstance;
     }
 

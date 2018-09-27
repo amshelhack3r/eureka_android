@@ -1,4 +1,4 @@
-package com.hack3r.amshel.eurekawaters;
+package com.hack3r.amshel.eurekawaters.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,14 +14,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.hack3r.amshel.eurekawaters.R;
+import com.hack3r.amshel.eurekawaters.helpers.CustomSmsAdapter;
+import com.hack3r.amshel.eurekawaters.helpers.MyItemTouchHelper;
+import com.hack3r.amshel.eurekawaters.library.Mutall;
+import com.hack3r.amshel.eurekawaters.library.VolleyController;
+import com.hack3r.amshel.eurekawaters.objects.Sms;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,14 +35,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Accounts extends Activity implements MyItemTouchHelper.itemTouchListener {
+public class MessagingActivity extends Activity implements MyItemTouchHelper.itemTouchListener {
 
     private ArrayList numbers;
     private ArrayList<Sms> smsArrayList;
     RecyclerView recyclerView;
-    public static final String url = "http://mutall.co.ke/mutall_eureka_waters/index.php";
+    public static final String url = "http://mutall.co.ke/eureka_android/test_intro_message.php";
     Mutall mutall;
-    public static final String TAG = Accounts.class.getSimpleName();
+    public static final String TAG = MessagingActivity.class.getSimpleName();
     SwipeRefreshLayout refreshLayout;
     HashMap<String, String> params;
     CustomSmsAdapter customSmsAdapter;
@@ -66,7 +70,7 @@ public class Accounts extends Activity implements MyItemTouchHelper.itemTouchLis
 
     public void promptSend(View view) {
         int no_accounts = numbers.size();
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(Accounts.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MessagingActivity.this);
         mBuilder.setTitle(R.string.edit_title)
                 .setMessage(String.format("You are sending  %1$d messages \n Are you sure?", no_accounts))
                 .setPositiveButton(R.string.edit_ok, new DialogInterface.OnClickListener() {
@@ -116,7 +120,7 @@ public class Accounts extends Activity implements MyItemTouchHelper.itemTouchLis
                     }
                 }
 
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Accounts.this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MessagingActivity.this);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
                 recyclerView.setNestedScrollingEnabled(false);
@@ -124,7 +128,7 @@ public class Accounts extends Activity implements MyItemTouchHelper.itemTouchLis
                 recyclerView.setAdapter(customSmsAdapter);
                 mutall.dismissProgress();
 
-                simpleCallback = new MyItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, Accounts.this);
+                simpleCallback = new MyItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, MessagingActivity.this);
                 new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
             }
         }, new Response.ErrorListener() {
