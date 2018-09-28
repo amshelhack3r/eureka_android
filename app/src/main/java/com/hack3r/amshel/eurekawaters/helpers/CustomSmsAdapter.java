@@ -24,7 +24,6 @@ public class CustomSmsAdapter extends RecyclerView.Adapter<CustomSmsAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView sms, mobile;
-        ImageView image;
         RelativeLayout foreground_view, background_view;
 
         public MyViewHolder(View view){
