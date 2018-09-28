@@ -24,7 +24,7 @@ public class SqlQuery {
             +READING_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             +READING_COLUMN_CLIENT +" TEXT NOT NULL, "
             +READING_COLUMN_DATE +" TEXT NOT NULL, "
-            +READING_COLUMN_VALUE+" TEXT NOT NULL, " +
+            +READING_COLUMN_VALUE+" INTEGER NOT NULL, " +
              "FOREIGN KEY("+READING_COLUMN_CLIENT+") REFERENCES "+ TABLE_CLIENT +"("+CLIENT_COLUMN_ID +"))";
 
     public static final String CREATE_CLIENT_TABLE = "CREATE TABLE "
@@ -94,6 +94,15 @@ public class SqlQuery {
                                                             +TABLE_READING+ " INNER JOIN "+ TABLE_CLIENT +" ON "
                                                             +TABLE_READING+"."+CLIENT_COLUMN_ID+"=" +TABLE_CLIENT+"."+CLIENT_COLUMN_ID
                                                         +" WHERE "+TABLE_READING+"."+READING_COLUMN_DATE+ " NOT LIKE ?";
+
+    public static final String ALL_READINGS = "SELECT "
+                                                    +TABLE_CLIENT+".*, "
+                                                    +TABLE_READING+".* "
+                                                +" FROM "
+                                                    +TABLE_READING+ " INNER JOIN "+ TABLE_CLIENT +" ON "
+                                                    +TABLE_READING+"."+CLIENT_COLUMN_ID+"=" +TABLE_CLIENT+"."+CLIENT_COLUMN_ID
+                                                + " ORDER BY "+READING_COLUMN_DATE+ " DESC";
+
 
 
     public static final String READING_INDEXES = "CREATE UNIQUE INDEX "+INDEX1 +" ON "+TABLE_READING+"("+READING_COLUMN_DATE+", "+READING_COLUMN_CLIENT+ ")";
