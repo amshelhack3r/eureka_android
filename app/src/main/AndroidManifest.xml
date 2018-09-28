@@ -44,6 +44,11 @@
         </activity>
         <activity android:name=".activity.SmsActivity" />
         <activity android:name=".activity.ReadingActivity" />
+        <activity android:name=".activity.ViewReadingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
 
     </application>
 
