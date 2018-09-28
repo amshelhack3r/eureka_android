@@ -258,7 +258,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
               String reading_date = date.getText().toString();
               String reading_value = value.getText().toString();
               String meter_no = meter_edit.getText().toString();
-                if (client_code == "" || reading_date == "" || reading_value == ""){
+                if (client_code.matches("") | reading_date.matches("") | reading_value.matches("")){
                     mutall.showSnack("Please enter all values");
                 }else {
                     if (validate(client_code, 1) && validate(reading_date, 2)) {
@@ -525,5 +525,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                 .build();
 
     }
+
+
 }
 
