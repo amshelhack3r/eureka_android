@@ -102,12 +102,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         }
 
-    public List<Reading> getAllReadings(){
+    public List<Reading> getAllReadings(String query){
+        String Sql;
+        List<Reading> readings = new ArrayList<>();
+        SQLiteDatabase database = this.getWritableDatabase();
+        if(query.matches("")){
+            Sql = SqlQuery.ALL_READINGS;
+        }else{
+            Sql = SqlQuery.formulateSql(query);
+        }
+        try {
+            Cursor cursor = database.rawQuery(Sql, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String code = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_CODE));
+                    String date = cursor.getString(cursor.getColumnIndex(SqlQuery.READING_COLUMN_DATE));
+                    int value = cursor.getInt(cursor.getColumnIndex(SqlQuery.READING_COLUMN_VALUE));
+                    String meter = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_METER));
+                    String name = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_NAME));
+
+                    Reading reading = new Reading(code, date, value);
+                    reading.setMeter(meter);
+                    reading.setName(name);
+                    readings.add(reading);
+                } while (cursor.moveToNext());
+            }
+        }catch (SQLiteException e){
+            e.printStackTrace();
+        }
+        database.close();
+
+        return readings;
+     }
+
+    public List<Reading> getSpecificReadings(String criteria){
         List<Reading> readings = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
 
+        Cursor cursor = database.rawQuery(SqlQuery.formulateSql(criteria), null);
 
-        Cursor cursor = database.rawQuery(SqlQuery.ALL_READINGS, null);
 
         if(cursor.moveToFirst()){
             do {
@@ -126,7 +160,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         database.close();
 
         return readings;
-     }
+    }
 //  get all clients
     public List<Reading> getAllClients() {
         List<Reading> clients = new ArrayList<>();
@@ -150,7 +184,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return clients;
     }
 
-      public int delete(String Table){
+    public int delete(String Table){
         SQLiteDatabase database = this.getWritableDatabase();
 
         int rows_deleted = database.delete(Table, null, null);
@@ -214,7 +248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Cursor cursor = database.rawQuery(SqlQuery.DAILY_READING_POSTING, new String[]{"2018-%"});
+        Cursor cursor = database.rawQuery(SqlQuery.DAILY_READING_POSTING, null);
 
         if (cursor.moveToFirst()) {
             do {
