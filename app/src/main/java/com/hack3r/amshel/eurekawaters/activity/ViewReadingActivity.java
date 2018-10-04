@@ -8,12 +8,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.hack3r.amshel.eurekawaters.R;
 import com.hack3r.amshel.eurekawaters.helpers.CustomReadingAdapter;
 import com.hack3r.amshel.eurekawaters.helpers.DatabaseHandler;
 import com.hack3r.amshel.eurekawaters.library.Mutall;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
+import com.hack3r.amshel.eurekawaters.query.SqlQuery;
 
 import java.util.List;
 
@@ -23,28 +27,45 @@ public class ViewReadingActivity extends Activity {
     RecyclerView recyclerView;   Mutall mutall;
     CustomReadingAdapter customReadingAdapter;
     DatabaseHandler databaseHandler;
+    EditText criteria;
+    Button search;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_readings);
         recyclerView = findViewById(R.id.recycler2);
         refreshLayout = findViewById(R.id.swiperefresh2);
+        criteria = findViewById(R.id.editCriteria);
+        search = findViewById(R.id.searchCriteria);
 
         databaseHandler = new DatabaseHandler(this);
         mutall = new Mutall(this);
-        populateView();
+        populateView("");
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String queryString = criteria.getText().toString();
+
+                if (!queryString.matches("")){
+                    populateView(queryString);
+                }else {
+                    mutall.showToast("no query ", "error");
+                }
+            }
+        });
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                populateView();
+                populateView("");
+                clearInputs();
             }
         });
 
         }
 
-    private void populateView(){
-        readings = databaseHandler.getAllReadings();
+    private void populateView(String query){
+        readings = databaseHandler.getAllReadings(query);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
@@ -54,4 +75,9 @@ public class ViewReadingActivity extends Activity {
         refreshLayout.setRefreshing(false);
 
     }
+
+    private void clearInputs(){
+        criteria.setText("");
+    }
+
 }
