@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.ajts.androidmads.sqliteimpex.SQLiteImporterExporter;
 import com.hack3r.amshel.eurekawaters.activity.MessagingActivity;
 import com.hack3r.amshel.eurekawaters.activity.ReadingActivity;
 import com.hack3r.amshel.eurekawaters.activity.SmsActivity;
@@ -14,7 +13,6 @@ import com.hack3r.amshel.eurekawaters.library.Mutall;
 
 public class MainActivity extends AppCompatActivity {
     Mutall mutall;
-    SQLiteImporterExporter sqLiteImporterExporter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
