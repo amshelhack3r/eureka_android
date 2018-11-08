@@ -19,6 +19,7 @@ public class SqlQuery {
     public static final String subq = "subq";
     public static final String subq1 = "subq1";
 //query to create the table reading
+
      public static final String CREATE_READING_TABLE = "CREATE TABLE "
             +TABLE_READING +"("
             +READING_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "

@@ -252,17 +252,18 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
             public void onClick(View view) {
               String client_code = code.getText().toString();
               String reading_date = date.getText().toString();
-              int reading_value = Integer.valueOf(value.getText().toString());
+              String reading_value = value.getText().toString();
               String meter_no = meter_edit.getText().toString();
-                if (client_code == "" || reading_date == "" || reading_value == 0){
+                if (client_code.matches("") || reading_date.matches("") || reading_value.matches("")){
                     mutall.showSnack("Please enter all values");
                 }else {
-                    if (validate(client_code, 1) && validate(reading_date, 2)) {
+                    if (validate(client_code, 1) && validate(reading_date, 2) && validate(reading_value, 3)) {
                         Reading client = new Reading(client_code, client_details.get(0).toString());
                         client.setMeter(meter_no);
-
+                        //convert the reading to integer
+                        int value = Integer.valueOf(reading_value);
                         databaseHandler.updateMeter(client);
-                        Reading reading = new Reading(client_code, reading_date, reading_value);
+                        Reading reading = new Reading(client_code, reading_date, value);
                         databaseHandler.insertReading(reading);
                         clearInputs();
                     }
@@ -327,7 +328,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
             case 1:
                 if(!autocomplete.contains(input)){
                     bool = false;
-                    mutall.showToast("Invalid Code", "warning");
+                    mutall.showSnack("Invalid Code");
                 }
                 break;
             case 2:
@@ -336,10 +337,16 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                     Date d = simpleDateFormat.parse(input);
                     if(System.currentTimeMillis() < d.getTime()){
                         bool = false;
-                        mutall.showToast("Date cant be greater than today's date", "warning");
+                        mutall.showSnack("Date cant be greater than today's date");
                     }
                 }catch (ParseException e){
                     e.printStackTrace();
+                }
+                break;
+            case 3:
+                if(Integer.valueOf(input)< Integer.valueOf(client_details.get(2).toString())){
+                    bool = false;
+                    mutall.showSnack("Value cannot be lower than previous");
                 }
                 break;
         }

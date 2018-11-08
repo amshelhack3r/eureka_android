@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import com.hack3r.amshel.eurekawaters.helpers.CustomReadingAdapter;
 import com.hack3r.amshel.eurekawaters.helpers.DatabaseHandler;
 import com.hack3r.amshel.eurekawaters.library.Mutall;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
-import com.hack3r.amshel.eurekawaters.query.SqlQuery;
 
 import java.util.List;
 
