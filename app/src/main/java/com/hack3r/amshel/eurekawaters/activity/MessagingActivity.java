@@ -44,7 +44,6 @@ public class MessagingActivity extends Activity implements MyItemTouchHelper.ite
     Mutall mutall;
     public static final String TAG = MessagingActivity.class.getSimpleName();
     SwipeRefreshLayout refreshLayout;
-    HashMap<String, String> params;
     CustomSmsAdapter customSmsAdapter;
     ItemTouchHelper.SimpleCallback simpleCallback;
 
@@ -142,35 +141,6 @@ public class MessagingActivity extends Activity implements MyItemTouchHelper.ite
 
         VolleyController.getInstance().addRequestQueue(jsonArrayRequest);
         refreshLayout.setRefreshing(false);
-    }
-
-    public void postToServer() {
-        //Get a list of all numbers gotten from the last activity
-        ArrayList sentNumbers = mutall.getAllSentNumbers();
-
-        final JSONArray jsonArray = new JSONArray();
-
-
-        String url = "http://mutall.co.ke/mutall_eureka_waters/insert/index.php";
-        params = new HashMap<>();
-        StringRequest anything = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                mutall.showToast(response, "success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mutall.showSnack(error.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                params.put("json", jsonArray.toString());
-                return params;
-            }
-        };
-        VolleyController.getInstance().addRequestQueue(anything);
     }
 
     @Override

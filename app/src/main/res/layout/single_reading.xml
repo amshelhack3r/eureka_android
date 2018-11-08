@@ -1,117 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="60dp">
 
-    <RelativeLayout
-        android:id="@+id/view_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_screen1">
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="62dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginStart="56dp"
+        android:text="code"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/delete_icon"
-            android:layout_width="@dimen/ic_delete"
-            android:layout_height="@dimen/ic_delete"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/padd_10"
-            android:src="@android:drawable/ic_menu_delete" />
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="35dp"
+        android:text="name"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/textView23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/padd_10"
-            android:layout_toStartOf="@id/delete_icon"
-            android:text="Delete"
-            android:textColor="#fff"
-            android:textSize="13dp" />
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="57dp"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:text="meter"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView23"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="60dp"
-            android:text="Send"
-            android:textColor="@color/cardview_light_background"
-            android:textSize="13dp" />
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginStart="142dp"
+        android:text="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-        <ImageView
-            android:id="@+id/send_icon"
-            android:layout_width="@dimen/ic_delete"
-            android:layout_height="@dimen/ic_delete"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/padd_10"
-            android:contentDescription="editing the image"
-            android:src="@android:drawable/sym_action_email" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/view_foreground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_screen1"
-        android:padding="@dimen/padd_10">
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="27dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/textView15"
-            android:layout_marginStart="137dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/textView15"
-            android:layout_marginTop="53dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textView15"
-            android:layout_marginEnd="41dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView17"
-            android:layout_alignTop="@+id/textView21"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView22"
-            android:layout_alignTop="@+id/textView21"
-            android:text="TextView" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="59dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="30dp"
+        android:text="value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView23" />
 
 
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

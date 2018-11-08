@@ -7,22 +7,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.hack3r.amshel.eurekawaters.R;
+import com.hack3r.amshel.eurekawaters.objects.Reading;
 
 import java.util.List;
 import java.util.Objects;
 
 public class CustomReadingAdapter extends RecyclerView.Adapter<CustomReadingAdapter.MyViewHolder> {
-    public List<Objects> reading;
+    public List<Reading> reading;
 
-    public CustomReadingAdapter(List<Objects> list) {
+    public CustomReadingAdapter(List<Reading> list) {
         this.reading = list;
 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView code, name, mobile, meter, date, value;
-        RelativeLayout foreground_view, background_view;
+        TextView code, name, meter, date, value;
 
         public MyViewHolder(View view){
             super(view);
@@ -31,11 +31,8 @@ public class CustomReadingAdapter extends RecyclerView.Adapter<CustomReadingAdap
             name = view.findViewById(R.id.textView17);
             meter = view.findViewById(R.id.textView21);
             date = view.findViewById(R.id.textView23);
-            mobile = view.findViewById(R.id.textView22);
             value = view.findViewById(R.id.textView24);
 
-            foreground_view = view.findViewById(R.id.view_foreground);
-            background_view = view.findViewById(R.id.view_background);
         }
     }
 
@@ -48,12 +45,12 @@ public class CustomReadingAdapter extends RecyclerView.Adapter<CustomReadingAdap
 
     @Override
     public void onBindViewHolder(CustomReadingAdapter.MyViewHolder holder, int position) {
-//        Object list = reading.get(position);
-//        holder.code.setText();
-
-//        List list = reading.get(position);
-//        holder.sms.setText(sms.getSmsBody());
-//        holder.mobile.setText(sms.getSmsNumber());
+        Reading r = reading.get(position);
+        holder.code.setText(r.getCode());
+        holder.name.setText(r.getName());
+        holder.meter.setText(r.getMeter());
+        holder.date.setText(r.getDate());
+        holder.value.setText(String.valueOf(r.getReading()));
     }
 
     @Override

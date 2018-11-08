@@ -7,14 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import com.hack3r.amshel.eurekawaters.objects.Client;
+
 import com.hack3r.amshel.eurekawaters.query.SqlQuery;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,32 +102,68 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         }
 
-//    public List<Reading> getAllReadings(){
-//        List<Reading> readings = new ArrayList<>();
-//
-//        SQLiteDatabase database = this.getWritableDatabase();
-//
-//        String sql = "SELECT * FROM "+ SqlQuery.TABLE_READING;
-//
-//        Cursor cursor = database.rawQuery(sql, null);
-//
-//        if(cursor.moveToFirst()){
-//            do {
-//                Reading reading = new Reading(
-//                        cursor.getString(cursor.getColumnIndex(COLUMN_CODE)),
-//                        cursor.getString(cursor.getColumnIndex(COLUMN_DATE)),
-//                        cursor.getString(cursor.getColumnIndex(COLUMN_VALUE))
-//                );
-//                readings.add(reading);
-//            }while (cursor.moveToNext());
-//        }
-//        database.close();
-//
-//        return readings;
-//     }
+    public List<Reading> getAllReadings(String query){
+        String Sql;
+        List<Reading> readings = new ArrayList<>();
+        SQLiteDatabase database = this.getWritableDatabase();
+        if(query.matches("")){
+            Sql = SqlQuery.ALL_READINGS;
+        }else{
+            Sql = SqlQuery.formulateSql(query);
+        }
+        try {
+            Cursor cursor = database.rawQuery(Sql, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String code = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_CODE));
+                    String date = cursor.getString(cursor.getColumnIndex(SqlQuery.READING_COLUMN_DATE));
+                    int value = cursor.getInt(cursor.getColumnIndex(SqlQuery.READING_COLUMN_VALUE));
+                    String meter = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_METER));
+                    String name = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_NAME));
+
+                    Reading reading = new Reading(code, date, value);
+                    reading.setMeter(meter);
+                    reading.setName(name);
+                    readings.add(reading);
+                } while (cursor.moveToNext());
+            }
+        }catch (SQLiteException e){
+            e.printStackTrace();
+        }
+        database.close();
+
+        return readings;
+     }
+
+    public List<Reading> getSpecificReadings(String criteria){
+        List<Reading> readings = new ArrayList<>();
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.rawQuery(SqlQuery.formulateSql(criteria), null);
+
+
+        if(cursor.moveToFirst()){
+            do {
+                String code = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_CODE));
+                String date = cursor.getString(cursor.getColumnIndex(SqlQuery.READING_COLUMN_DATE));
+                int value = cursor.getInt(cursor.getColumnIndex(SqlQuery.READING_COLUMN_VALUE));
+                String meter = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_METER));
+                String name = cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_NAME));
+
+                Reading reading = new Reading(code, date, value);
+                reading.setMeter(meter);
+                reading.setName(name);
+                readings.add(reading);
+            }while (cursor.moveToNext());
+        }
+        database.close();
+
+        return readings;
+    }
 //  get all clients
-    public List<Client> getAllClients() {
-        List<Client> clients = new ArrayList<>();
+    public List<Reading> getAllClients() {
+        List<Reading> clients = new ArrayList<>();
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -137,7 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Client client = new Client(
+                Reading client = new Reading(
                         cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_CODE)),
                         cursor.getString(cursor.getColumnIndex(SqlQuery.CLIENT_COLUMN_NAME))
                 );
@@ -149,7 +184,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return clients;
     }
 
-      public int delete(String Table){
+    public int delete(String Table){
         SQLiteDatabase database = this.getWritableDatabase();
 
         int rows_deleted = database.delete(Table, null, null);
@@ -168,7 +203,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return rowCount;
     }
 
-    public int updateMeter(Client client){
+    public int updateMeter(Reading client){
         //get writeable database as we want to write to the database
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -181,7 +216,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return id;
     }
 
-    public void populateClientTable(Client client){
+    public void populateClientTable(Reading client){
         //get writeable database as we want to write to the database
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -213,7 +248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Cursor cursor = database.rawQuery(SqlQuery.DAILY_READING_POSTING, new String[]{"2018-%"});
+        Cursor cursor = database.rawQuery(SqlQuery.DAILY_READING_POSTING, null);
 
         if (cursor.moveToFirst()) {
             do {

@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -39,7 +38,6 @@ import com.hack3r.amshel.eurekawaters.helpers.DatabaseHandler;
 import com.hack3r.amshel.eurekawaters.helpers.DatePickerFragment;
 import com.hack3r.amshel.eurekawaters.library.Mutall;
 import com.hack3r.amshel.eurekawaters.library.VolleyController;
-import com.hack3r.amshel.eurekawaters.objects.Client;
 import com.hack3r.amshel.eurekawaters.objects.Reading;
 import com.hack3r.amshel.eurekawaters.query.SqlQuery;
 import com.shashank.sony.fancydialoglib.Animation;
@@ -51,8 +49,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
@@ -84,7 +80,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
     private static final String url = "http://mutall.co.ke/eureka_android/client_details.php";
     private static final String url1 = "http://mutall.co.ke/eureka_android/reading_on_max_date.php";
     private static final String url2 = "http://mutall.co.ke/eureka_android/upload_reading.php";
-    List<Client> codes;
+    List<Reading> codes;
     List autocomplete;
     Switch aSwitch, switch2;
     List client_details;
@@ -237,7 +233,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
 
         codes = databaseHandler.getAllClients();
 
-        for(Client x : codes){
+        for(Reading x : codes){
             String a = x.getCode();
             autocomplete.add(a);
         }
@@ -258,15 +254,16 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
               String reading_date = date.getText().toString();
               String reading_value = value.getText().toString();
               String meter_no = meter_edit.getText().toString();
-                if (client_code.matches("") | reading_date.matches("") | reading_value.matches("")){
+                if (client_code.matches("") || reading_date.matches("") || reading_value.matches("")){
                     mutall.showSnack("Please enter all values");
                 }else {
-                    if (validate(client_code, 1) && validate(reading_date, 2)) {
-                        Client client = new Client(client_code, client_details.get(0).toString());
+                    if (validate(client_code, 1) && validate(reading_date, 2) && validate(reading_value, 3)) {
+                        Reading client = new Reading(client_code, client_details.get(0).toString());
                         client.setMeter(meter_no);
-
+                        //convert the reading to integer
+                        int value = Integer.valueOf(reading_value);
                         databaseHandler.updateMeter(client);
-                        Reading reading = new Reading(client_code, reading_date, reading_value);
+                        Reading reading = new Reading(client_code, reading_date, value);
                         databaseHandler.insertReading(reading);
                         clearInputs();
                     }
@@ -331,7 +328,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
             case 1:
                 if(!autocomplete.contains(input)){
                     bool = false;
-                    mutall.showToast("Invalid Code", "warning");
+                    mutall.showSnack("Invalid Code");
                 }
                 break;
             case 2:
@@ -340,10 +337,16 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                     Date d = simpleDateFormat.parse(input);
                     if(System.currentTimeMillis() < d.getTime()){
                         bool = false;
-                        mutall.showToast("Date cant be greater than today's date", "warning");
+                        mutall.showSnack("Date cant be greater than today's date");
                     }
                 }catch (ParseException e){
                     e.printStackTrace();
+                }
+                break;
+            case 3:
+                if(Integer.valueOf(input)< Integer.valueOf(client_details.get(2).toString())){
+                    bool = false;
+                    mutall.showSnack("Value cannot be lower than previous");
                 }
                 break;
         }
@@ -396,7 +399,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                         String client_meter = jsonObject.getString("meter_serial_no");
                         String client_number = jsonObject.getString("number");
 
-                        Client client = new Client(client_code, client_name);
+                        Reading client = new Reading(client_code, client_name);
                         if(client_meter != null){
                             client.setMeter(client_meter);
                         }
@@ -431,7 +434,7 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                         JSONObject jsonObject = response.getJSONObject(i);
                         String client_code = jsonObject.getString("code");
                         String date = jsonObject.getString("date");
-                        String value = jsonObject.getString("value");
+                        int value = jsonObject.getInt("value");
 
                         Reading reading = new Reading(client_code, date, value);
 
@@ -525,7 +528,5 @@ public class ReadingActivity extends AppCompatActivity implements DatePickerDial
                 .build();
 
     }
-
-
 }
 

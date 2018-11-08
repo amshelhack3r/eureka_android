@@ -9,6 +9,7 @@ import android.view.View;
 import com.hack3r.amshel.eurekawaters.activity.MessagingActivity;
 import com.hack3r.amshel.eurekawaters.activity.ReadingActivity;
 import com.hack3r.amshel.eurekawaters.activity.SmsActivity;
+import com.hack3r.amshel.eurekawaters.activity.ViewReadingActivity;
 import com.hack3r.amshel.eurekawaters.library.Mutall;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,4 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mutall.showToast(message, "info");
     }
 
+    public void viewDb(View view){
+        Intent intent = new Intent(this, ViewReadingActivity.class);
+        startActivity(intent);
+    }
 }
