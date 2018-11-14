@@ -153,43 +153,6 @@ public class Mutall {
         smsManager.sendTextMessage(number, null, message, sentIntent, null);
         return true;
     }
-
-    /**
-     * Function for displaying the inbox sms for a particular number
-     * The user passes on the addresss(number) is given the full inbox
-     * for that particular address(number)
-     * The function returns an adapter of type SmsAdapter which is a custom adapter for displaying
-     * the message address and message body
-     * @param address
-     */
-//    public SmsAdapter messageAdapter(String address){
-//        requestSmsPermission();
-//        SmsAdapter smsAdapter;
-//        ContentResolver contentResolver = activity.getContentResolver();
-//        String selection = '\'' + address + '\'';
-//        try {
-//            Cursor smsInboxCursor = contentResolver.query(Uri.parse("content://sms/inbox"), null, "address=" + selection, null, null);
-//            int indexBody = smsInboxCursor.getColumnIndex("body");
-//            int indexAddress = smsInboxCursor.getColumnIndex("address");
-//            if (smsInboxCursor.moveToFirst()) {
-//                do {
-//                    String smsNum = smsInboxCursor.getString(indexAddress);
-//                    String smsBody = smsInboxCursor.getString(indexBody);
-//
-//                    Sms sms = new Sms();
-//                    sms.setSmsNumber(smsNum);
-//                    sms.setSmsBody(smsBody);
-//                    smsMessagesList.add(sms);
-//                } while (smsInboxCursor.moveToNext());
-//            }
-//        } catch (SQLiteException e) {
-//            //            For debbugging
-//            Log.e("err", e.getMessage());
-//        }
-//        smsAdapter = new SmsAdapter(activity, smsMessagesList);
-//        return smsAdapter;
-//    }
-
     /**
      * Simplae method for displaying a tost notification box in the current activity
      * In future it will be replaced by a snackbar because it is more customizible
