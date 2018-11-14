@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hack3r.amshel.eurekawaters.MainActivity;
-import com.hack3r.amshel.eurekawaters.helpers.PopulateDb;
 import com.hack3r.amshel.eurekawaters.helpers.PrefManager;
 import com.hack3r.amshel.eurekawaters.R;
 

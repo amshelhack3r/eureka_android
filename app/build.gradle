@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.ajts.androidmads.sqliteimpex:library:1.0.0'
     implementation 'com.android.support:gridlayout-v7:27.1.1'
     implementation 'com.github.Shashank02051997:FancyAlertDialog-Android:0.1'
+    implementation 'com.github.abdularis:CircularImageView:v1.2'
 }
