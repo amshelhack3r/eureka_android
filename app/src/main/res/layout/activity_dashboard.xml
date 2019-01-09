@@ -344,6 +344,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Disconnect"
+                android:onClick="disconnect_client"
                 android:textColor="#5E35B1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -357,6 +358,7 @@
                 android:layout_marginStart="29dp"
                 android:layout_marginTop="6dp"
                 android:text="invoices"
+                android:onClick="generate_invoices"
                 android:textColor="#5E35B1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -368,6 +370,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginBottom="16dp"
                 android:text="Add client"
+                android:onClick="add_client"
                 android:textColor="#5E35B1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -380,6 +383,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="schedule"
+                android:onClick="generate_schedule"
                 android:textColor="#5E35B1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

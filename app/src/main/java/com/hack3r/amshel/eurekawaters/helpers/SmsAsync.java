@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class SmsAsync extends Thread implements Runnable {
     String TAG = SmsAsync.class.getSimpleName();
     String url = "http://mutall.co.ke/eureka_android/client_details.php";
+
+    //url for sending invoices
+    String invoice_url = "http://mutall.co.ke/eureka_waters?request=send_invoices_sms";
     @Override
     public void run() {
         getMessages();
@@ -31,7 +34,7 @@ public class SmsAsync extends Thread implements Runnable {
      *
      */
     void getMessages(){
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, invoice_url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 sendMessages(response);
@@ -48,22 +51,23 @@ public class SmsAsync extends Thread implements Runnable {
 
     /**
      * create a method for sending sms to each of the clients
-     * @param array
+     *
      */
     void sendMessages(JSONArray array){
         SmsManager manager = SmsManager.getDefault();
-        for (int i = 0; i<array.length(); i++ ){
+
+        for (int i = 237; i<array.length(); i++ ){
             try {
                 JSONObject object = array.getJSONObject(i);
 
-                ArrayList<String> parts = manager.divideMessage(object.getString("message"));
+                ArrayList<String> parts = manager.divideMessage(object.getString("sms"));
 
-                String phone_number = object.getString("number");
+                String phone_number = object.getString("mobile");
 
                 manager.sendMultipartTextMessage(phone_number, null, parts, null, null);
 
-
-                this.sleep(7000);
+                Log.i(TAG, String.valueOf(i) +": "+ phone_number);
+                this.sleep(5000);
             }catch (JSONException error){
                 error.printStackTrace();
             }catch (InterruptedException error){
